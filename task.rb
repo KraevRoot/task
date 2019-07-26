@@ -8,13 +8,16 @@ class Canvas
   def create_canvas
     canvas = []
     @height.times { |h|
-      canvas << Array.new(20, "@")
+      canvas << Array.new(20, " ")
     }
     canvas
   end
 
   def to_s
-    puts @canvas.map { |line| line.join("") }
+    # write to file
+    puts "-" * (@width + 2)
+    puts @canvas.map { |line| "|" + line.join("") + "|" }
+    puts "-" * (@width + 2)
   end
 
   def line(x1, y1, x2, y2)
@@ -22,6 +25,7 @@ class Canvas
     # if direction positive
     # if direction negative
     # TODO decrease user input 1 = 0, 2 = 1
+    x1 -= 1; x2 -= 1; y1 -= 1; y2 -= 1
     cur_x = x1
     cur_y = y1
     loop do
@@ -42,6 +46,13 @@ class Canvas
       end
     end
   end
+
+  def rectangle(x1, y1, x2, y2)
+    line(x1, y1, x2, y1)
+    line(x1, y1, x1, y2)
+    line(x2, y2, x1, y2)
+    line(x2, y2, x2, y1)
+  end
 end
 
 c = Canvas.new(20, 4)
@@ -49,6 +60,7 @@ puts c
 
 c.line(1, 2, 6, 2)
 
-c.line(2,0, 2, 3)
+c.line(6, 3, 6, 4)
 
+c.rectangle(16, 1, 20, 3)
 puts c
