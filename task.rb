@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 class Canvas
   def initialize(width, height)
     @width = width
