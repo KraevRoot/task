@@ -6,3 +6,7 @@ Possible confisions/problems:
 
 How to run:
 ruby task.rb path_to_input_file
+
+
+Checked on ruby version:
+ruby 2.6.3p62
