@@ -64,6 +64,7 @@ class Canvas
     # TODO: add user input checks
     x -= 1; y -= 1
     node_color = @canvas[y][x]
+    return if node_color == replace_color
     queue = Queue.new
     @canvas[y][x] = replace_color
     queue.enq([x, y])
