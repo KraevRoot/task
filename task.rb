@@ -100,7 +100,7 @@ class Executor
         @canvas_instance.rectangle(Regexp.last_match(1).to_i, Regexp.last_match(2).to_i, Regexp.last_match(3).to_i, Regexp.last_match(4).to_i)
         @canvas_instance.write_file(@output)
       when /^B\s(\d+)\s(\d+)\s(.)$/
-        @canvas_instance.bucket_fill(Regexp.last_match(1).to_i, Regexp.last_match(2).to_i, Regexp.last_match(3).to_i)
+        @canvas_instance.bucket_fill(Regexp.last_match(1).to_i, Regexp.last_match(2).to_i, Regexp.last_match(3))
         @canvas_instance.write_file(@output)
       else
         puts "Unrecognized command: #{line}"
