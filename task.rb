@@ -27,6 +27,7 @@ class Canvas
   end
 
   def out_of_bound?(x, y)
+    x -= 1; y -= 1
     if !@canvas[y] || !@canvas[y][x] || x < 0 || y < 0
       return true
     end
@@ -35,8 +36,8 @@ class Canvas
 
   def line(x1, y1, x2, y2)
     return unless canvas_created?
-    x1 -= 1; x2 -= 1; y1 -= 1; y2 -= 1
     return if out_of_bound?(x1, y1) || out_of_bound?(x2, y2)
+    x1 -= 1; x2 -= 1; y1 -= 1; y2 -= 1
     cur_x = x1
     cur_y = y1
     loop do
@@ -85,8 +86,8 @@ class Canvas
 
   def bucket_fill(x, y, replace_color = 'z')
     return unless canvas_created?
-    x -= 1; y -= 1
     return if out_of_bound?(x, y)
+    x -= 1; y -= 1
     node_color = @canvas[y][x]
     return if node_color == replace_color
     queue = Queue.new
