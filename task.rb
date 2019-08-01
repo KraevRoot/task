@@ -26,9 +26,17 @@ class Canvas
     end
   end
 
+  def out_of_bound?(x, y)
+    if !@canvas[y] || !@canvas[y][x] || x < 0 || y < 0
+      return true
+    end
+    false
+  end
+
   def line(x1, y1, x2, y2)
     return unless canvas_created?
     x1 -= 1; x2 -= 1; y1 -= 1; y2 -= 1
+    return if out_of_bound?(x1, y1) || out_of_bound?(x2, y2)
     cur_x = x1
     cur_y = y1
     loop do
@@ -55,6 +63,7 @@ class Canvas
   end
 
   def rectangle(x1, y1, x2, y2)
+    return if out_of_bound?(x1, y1) || out_of_bound?(x2, y2)
     line(x1, y1, x2, y1)
     line(x1, y1, x1, y2)
     line(x2, y2, x1, y2)
@@ -77,6 +86,7 @@ class Canvas
   def bucket_fill(x, y, replace_color = 'z')
     return unless canvas_created?
     x -= 1; y -= 1
+    return if out_of_bound?(x, y)
     node_color = @canvas[y][x]
     return if node_color == replace_color
     queue = Queue.new
@@ -96,9 +106,14 @@ end
 
 class Executor
   def initialize
-    @input = ARGV[0]
+    @input = ARGV[0] if input_file_given?
+    raise "Plaese! Pass file into the program." if !input_file_given?
     @canvas_instance = nil
     @output = File.join(__dir__, 'output.txt')
+  end
+
+  def input_file_given?
+    ARGV[0] ? true : false
   end
 
   def process_file
