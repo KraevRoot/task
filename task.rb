@@ -10,7 +10,7 @@ class Canvas
   def create_canvas
     canvas = []
     @height.times do |_h|
-      canvas << Array.new(20, ' ')
+      canvas << Array.new(@width, ' ')
     end
     canvas
   end
