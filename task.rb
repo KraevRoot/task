@@ -4,6 +4,7 @@ class Canvas
   def initialize(width, height)
     @width = width
     @height = height
+    @canvas_created = false
     @canvas = create_canvas
   end
 
@@ -12,6 +13,7 @@ class Canvas
     @height.times do |_h|
       canvas << Array.new(@width, ' ')
     end
+    @canvas_created = true
     canvas
   end
 
@@ -25,6 +27,7 @@ class Canvas
   end
 
   def line(x1, y1, x2, y2)
+    return unless @canvas_created?
     x1 -= 1; x2 -= 1; y1 -= 1; y2 -= 1
     cur_x = x1
     cur_y = y1
@@ -37,6 +40,17 @@ class Canvas
       else
         cur_x > x2 ? cur_x -= 1 : cur_x += 1
       end
+    end
+  end
+
+  def canvas_created?
+    if @canvas_created
+      return true
+    else
+      File.open(file_path, 'a') do |line|
+        line.puts "Please create canvas first!\n"
+      end
+      return false
     end
   end
 
@@ -61,7 +75,7 @@ class Canvas
   end
 
   def bucket_fill(x, y, replace_color = 'z')
-    # TODO: add user input checks
+    return unless @canvas_created?
     x -= 1; y -= 1
     node_color = @canvas[y][x]
     return if node_color == replace_color
